@@ -1,0 +1,6 @@
+<?php
+     $sql = "SELECT * FROM livraison";
+     $query = mysql_query($sql);
+     while ( $results[] = mysql_fetch_object ( $query ) );
+     array_pop ( $results );
+?>

@@ -7,10 +7,13 @@ function afficherChauffeur ($chauffeur){
 		echo "Cin: ".$chauffeur->getCin()."<br>";
 		echo "Numero de telephone: ".$chauffeur->getNumero()."<br>";
 		echo "E-mail: ".$chauffeur->getMail()."<br>";
+		echo "Etat: ".$chauffeur->getEtat()."<br>";
+		echo "Recclamation: ".$chauffeur->getRecc()."<br>";
+		echo "Vehicule: ".$chauffeur->getVehicule()."<br>";
 	}
 
 	function ajouterChauffeur($chauffeur){
-		$sql="insert into chauffeur (nom,prenom,cin,numero,email) values ( :nom,:prenom,:cin,:numero,:email)";
+		$sql="INSERT INTO chauffeur (nom,prenom,cin,numero,email,etat,recc,vehicule) VALUES ( :nom,:prenom,:cin,:numero,:email,:etat,:recc,:vehicule)";
 		$db = config::getConnexion();
 		try{
         $req=$db->prepare($sql);//prÃ©pare la requete sql Ã  etre exÃ©cutÃ© par
@@ -21,11 +24,17 @@ function afficherChauffeur ($chauffeur){
         $cin=$chauffeur->getCin();
         $numero=$chauffeur->getNumero();
         $email=$chauffeur->getMail();
+        $etat=$chauffeur->getEtat();
+        $recc=$chauffeur->getRecc();
+        $vehicule=$chauffeur->getVehicule();
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':prenom',$prenom);
 		$req->bindValue(':cin',$cin);//bind value associe une valeur Ã  un parametre
 		$req->bindValue(':numero',$numero);
 		$req->bindValue(':email',$email);
+		$req->bindValue(':etat',$etat);
+		$req->bindValue(':recc',$recc);
+		$req->bindValue(':vehicule',$vehicule);
 		
             $req->execute();
            
@@ -38,7 +47,7 @@ function afficherChauffeur ($chauffeur){
 	
 	function afficherChauffeurs(){
 		//$sql="SElECT * From chauffeur e inner join formationphp.chauffeur a on e.cin= a.cin";
-		$sql="SElECT * From chauffeur";
+		$sql="SELECT * From chauffeur";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -62,7 +71,7 @@ function afficherChauffeur ($chauffeur){
         }
 	}
 	function modifierChauffeur($chauffeur,$cin){
-		$sql="UPDATE chauffeur SET nom=:nom,prenom=:prenom,cin=:cinn, numero=:numero,email=:email WHERE cin=:cin";
+		$sql="UPDATE chauffeur SET nom=:nom,prenom=:prenom,cin=:cinn, numero=:numero,email=:email,etat=:etat,recc=:recc,vehicule=:vehicule WHERE cin=:cin";
 		
 		$db = config::getConnexion();
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
@@ -73,13 +82,20 @@ try{
         $cinn=$chauffeur->getCin();
         $numero=$chauffeur->getNumero();
         $email=$chauffeur->getMail();
-		$datas = array( ':nom'=>$nom,':prenom'=>$prenom,':cinn'=>$cinn, ':cin'=>$cin,':numero'=>$numero,':email'=>$email);
+        $etat=$chauffeur->getEtat();
+        $recc=$chauffeur->getRecc();
+        $vehicule=$chauffeur->getVehicule();
+		$datas = array( ':nom'=>$nom,':prenom'=>$prenom,':cinn'=>$cinn, ':cin'=>$cin,':numero'=>$numero,':email'=>$email, 'etat'=>$etat, 'recc'=>$recc, 'vehicule'=>$vehicule);
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':prenom',$prenom);
 		$req->bindValue(':cinn',$cinn);
 		$req->bindValue(':cin',$cin);
 		$req->bindValue(':numero',$numero);
 		$req->bindValue(':email',$email);
+		$req->bindValue(':etat',$etat);
+		$req->bindValue(':recc',$recc);
+		$req->bindValue(':vehicule',$vehicule);
+
 		
 		
             $s=$req->execute();
@@ -94,7 +110,7 @@ try{
 		
 	}
 	function recupererChauffeur($cin){
-		$sql="SELECT * from chauffeur where cin=$cin";
+		$sql="SELECT * from chauffeur WHERE cin=$cin";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -105,8 +121,8 @@ try{
         }
 	}
 	
-	function rechercherListeEmployes($maill){
-		$sql="SELECT * from chauffeur where email=$maill";
+	function rechercherListeChauffeurs($cinn){
+		$sql="SELECT * from chauffeur where cin=$cinn";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);

@@ -2,24 +2,30 @@
 
 class Livraison{
 	
-
+	private $id;
 	private $nom;
 	private $prenom;
 	private $cin;
 	private $numero;
 	private $email;
 	private $adresse;
+	private $livreur;
 
 
-	function __construct($nom,$prenom,$cin,$numero,$email,$adresse)
+	function __construct($id,$nom,$prenom,$cin,$numero,$email,$adresse,$livreur)
 	{	
-
+		$this->id=$id;
 		$this->nom=$nom;
 		$this->prenom=$prenom;
 		$this->cin=$cin;
 		$this->numero=$numero;
 		$this->email=$email;
 		$this->adresse=$adresse;
+		$this->livreur=$livreur;
+	}
+
+	function getId(){
+		return $this->id;
 	}
 
 
@@ -47,6 +53,14 @@ class Livraison{
 		return $this->adresse;
 	}
 
+	function getLivreur(){
+		return $this->livreur;
+	}
+
+	function setId($id){
+		$this->id=$id;
+	}
+
 	function setNom($nom){
 		$this->nom=$nom;
 	}
@@ -69,6 +83,10 @@ class Livraison{
 
 	function setAdresse($adresse){
 		$this->adresse=$adresse;
+	}
+
+	function setLivreur($livreur){
+		$this->livreur=$livreur;
 	}
 
 }

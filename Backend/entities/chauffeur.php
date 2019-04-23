@@ -8,9 +8,12 @@ class Chauffeur{
 	private $cin;
 	private $numero;
 	private $email;
+	private $etat;
+	private $recc;
+	private $vehicule;
 
 
-	function __construct($nom,$prenom,$cin,$numero,$email)
+	function __construct($nom,$prenom,$cin,$numero,$email,$etat,$recc,$vehicule)
 	{	
 
 		$this->nom=$nom;
@@ -18,6 +21,9 @@ class Chauffeur{
 		$this->cin=$cin;
 		$this->numero=$numero;
 		$this->email=$email;
+		$this->etat=$etat;
+		$this->recc=$recc;
+		$this->vehicule=$vehicule;
 	}
 
 
@@ -41,6 +47,18 @@ class Chauffeur{
 		return $this->email;
 	}
 
+	function getEtat(){
+		return $this->etat;
+	}
+
+	function getRecc(){
+		return $this->recc;
+	}
+
+	function getVehicule(){
+		return $this->vehicule;
+	}
+
 	function setNom($nom){
 		$this->nom=$nom;
 	}
@@ -59,6 +77,18 @@ class Chauffeur{
 
 	function setMail($email){
 		$this->email=$email;
+	}
+
+	function setEtat($etat){
+		$this->etat=$etat;
+	}
+
+	function setRecc($recc){
+		$this->recc=$recc;
+	}
+
+	function setVehicule($vehicule){
+		$this->vehicule=$vehicule;
 	}
 
 }

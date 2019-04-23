@@ -4,13 +4,13 @@ class EvennementC {
 function afficherEvennement ($evennement){
 		echo "Nom: ".$evennement->getNom()."<br>";
 		echo "Date Debut: ".$evennement->getDateDeb()."<br>";
-		echo "Periode: ".$evennement->getPeriode()."<br>";
+		echo "Date Fin: ".$evennement->getDateFin()."<br>";
 		echo "Boutiques: ".$evennement->getBoutiques()."<br>";
 		echo "Description: ".$evennement->getDesc()."<br>";
 	}
 
 	function ajouterEvennement($evennement){
-		$sql="INSERT INTO evennement (nom,date_deb,periode,boutiques,description) VALUES (:nom,:date_deb,:periode,:boutiques,:description)";
+		$sql="INSERT INTO evennement (nom,date_deb,date_fin,boutiques,description) VALUES (:nom,:date_deb,:date_fin,:boutiques,:description)";
 		$db = config::getConnexion();
 		try{
         $req=$db->prepare($sql);//prÃ©pare la requete sql Ã  etre exÃ©cutÃ© par
@@ -18,12 +18,13 @@ function afficherEvennement ($evennement){
         
         $nom=$evennement->getNom();
         $date_deb=$evennement->getDateDeb();
-        $periode=$evennement->getPeriode();
+        $date_fin=$evennement->getDateFin();
         $boutiques=$evennement->getBoutiques();
         $description=$evennement->getDesc();
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':date_deb',$date_deb);
-		$req->bindValue(':periode',$periode);//bind value associe une valeur Ã  un parametre
+		$req->bindValue(':date_fin',$date_fin);
+		//bind value associe une valeur Ã  un parametre
 		$req->bindValue(':boutiques',$boutiques);
 		$req->bindValue(':description',$description);
 		
@@ -62,22 +63,22 @@ function afficherEvennement ($evennement){
         }
 	}
 	function modifierEvennement($evennement,$nom){
-		$sql="UPDATE evennement SET nom=:nomm, date_deb=:date_deb, periode=:periode, boutiques=:boutiques, description=:description WHERE nom=:nom";
+		$sql="UPDATE evennement SET nom=:nomm, date_deb=:date_deb,date_fin=:date_fin, boutiques=:boutiques, description=:description WHERE nom=:nom";
 		
 		$db = config::getConnexion();
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 try{		
         $req=$db->prepare($sql);
-        $nom=$evennement->getNom();
+        $nomm=$evennement->getNom();
         $date_deb=$evennement->getDateDeb();
-        $periode=$evennement->getPeriode();
+        $date_fin=$evennement->getDateFin();
         $boutiques=$evennement->getBoutiques();
         $description=$evennement->getDesc();
-		$datas = array(':nomm'=>$nomm, ':nom'=>$nom,':date_deb'=>$date_deb,':periode'=>$periode,':boutiques'=>$boutiques,':description'=>$description);
+		//$datas = array(':nomm'=>$nomm, ':nom'=>$nom,':date_deb'=>$date_deb,':periode'=>$periode,':boutiques'=>$boutiques,':description'=>$description);
 		$req->bindValue(':nomm',$nomm);
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':date_deb',$date_deb);
-		$req->bindValue(':periode',$periode);
+		$req->bindValue(':date_fin',$date_fin);
 		$req->bindValue(':boutiques',$boutiques);
 		$req->bindValue(':description',$description);
 		

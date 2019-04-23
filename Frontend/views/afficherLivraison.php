@@ -385,12 +385,14 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
 				<div class="wrap-table-shopping-cart bgwhite">
 					<table class="table-shopping-cart">
 						<tr class="table-head">
+							<th class="column-1">Id</th>
 							<th class="column-1">Nom</th>
 							<th class="column-1">Prenom</th>
 							<th class="column-1">Cin</th>
-							<th class="column-1">Numero Tel</th>
+							<th class="column-1">Telephone</th>
 							<th class="column-1">E-mail</th>
 							<th class="column-1">Adresse</th>
+							<th class="column-1">Livreur</th>
 							<th class="column-1">Supprimer</th>
 							<th class="column-1">Modifier</th>
 						</tr>
@@ -398,20 +400,22 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
 foreach($listeLivraisons as $row){
     ?>
     <tr>
-    
-    <td><?PHP echo $row['nom']; ?></td>
-    <td><?PHP echo $row['prenom']; ?></td>
-    <td><?PHP echo $row['cin']; ?></td>
-    <td><?PHP echo $row['numero']; ?></td>
-    <td><?PHP echo $row['email']; ?></td>
-    <td><?PHP echo $row['adresse']; ?></td>
-    <td><form method="POST" action="supprimerLivraison.php">
-    <input type="submit" name="supprimer" value="Supprimer" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-    <input type="hidden" value="<?PHP echo $row['cin']; ?>" name="cin">
+    <td class="column-1"><?PHP echo $row['id']; ?></td>
+    <td class="column-1"><?PHP echo $row['nom']; ?></td>
+    <td class="column-1"><?PHP echo $row['prenom']; ?></td>
+    <td class="column-1"><?PHP echo $row['cin']; ?></td>
+    <td class="column-1"><?PHP echo $row['numero']; ?></td>
+    <td class="column-1"><?PHP echo $row['email']; ?></td>
+    <td class="column-1"><?PHP echo $row['adresse']; ?></td>
+    <td class="column-1"><a href="coordonneesChauffeur.php?livreur=<?PHP echo $row['livreur']; ?>"><?PHP echo $row['livreur']; ?></a></td>
+    <td class="column-1"><form method="POST" action="supprimerLivraison.php">
+    <button><img src="https://img.icons8.com/dusk/64/000000/cancel.png"></button>
+    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
     </form>
     </td>
-    <td><a href="modifierLivraison.php?cin=<?PHP echo $row['cin']; ?>" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-    Modifier</a></td>
+    <td class="column-1">
+    	<a href="modifierLivraison.php?id=<?PHP echo $row['id']; ?>" >
+    <img src="https://img.icons8.com/dusk/64/000000/multi-edit.png"></a></td>
     </tr>
     <?PHP
 }

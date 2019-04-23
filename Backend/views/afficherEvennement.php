@@ -165,7 +165,7 @@ $listeEvennements=$evennement1C->afficherEvennements();
                         </li>
 
                         <li>
-                            <a href="evenement.html"><span class="badge badge-success pull-right">812</span> Evenements</a>
+                            <a href="evenement.php"><span class="badge badge-success pull-right">812</span> Evenements</a>
                         </li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
@@ -239,7 +239,7 @@ $listeEvennements=$evennement1C->afficherEvennements();
                         <!-- block -->
                         <div class="block">
                             <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left">Chauffeurs</div>
+                                <div class="muted pull-left">Evennements</div>
                             </div>
                             <div class="block-content collapse in">
                                 <div class="span12">
@@ -249,7 +249,7 @@ $listeEvennements=$evennement1C->afficherEvennements();
 <tr>
 <th>Nom</th>
 <th>Date Debut</th>
-<th>Periode</th>
+<th>Date Fin</th>
 <th>Boutiques</th>
 <th>Description</th>
 <th>Supprimer</th>
@@ -264,7 +264,7 @@ foreach($listeEvennements as $row){
     
     <td><?PHP echo $row['nom']; ?></td>
     <td><?PHP echo $row['date_deb']; ?></td>
-    <td><?PHP echo $row['periode']; ?></td>
+    <td><?PHP echo $row['date_fin']; ?></td>
     <td><?PHP echo $row['boutiques']; ?></td>
     <td><?PHP echo $row['description']; ?></td>
     <td><form method="POST" action="supprimerEvennement.php">
@@ -280,6 +280,7 @@ foreach($listeEvennements as $row){
 ?>
                                         </tbody>
                                     </table>
+                                    <a href="http://localhost/Projet/Frontend/views/index.html" class="btn btn-primary">Consuter Evennement</a>
                                     </div>
                                 </div>
                             </div>

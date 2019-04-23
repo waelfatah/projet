@@ -239,7 +239,7 @@ if (isset($_GET['nom'])){
                                 <div class="span12">
                                     <form class="form-horizontal" method="POST">
                                       <fieldset>
-                                        <legend>Ajouter Evenement</legend>
+                                        <legend>Modifier Evenement</legend>
                                         <div class="control-group">
                                           <label class="control-label" for="typeahead">Nom de l'evenement </label>
                                           <div class="controls">
@@ -259,7 +259,7 @@ if (isset($_GET['nom'])){
                                           <label class="control-label" for="select01">Periode</label>
                                           <div class="controls">
                                             <select name="periode" type="text" id="select01" class="chzn-select" value="<?PHP echo $periode ?>">
-                                              <option> Selectionnez</option>
+                                              <option></option>
                                               <option>1 semaine</option>
                                               <option>2 semaines</option>
                                               <option>3 semaines</option>
@@ -273,7 +273,7 @@ if (isset($_GET['nom'])){
                                           <label class="control-label" for="select01">Boutiques</label>
                                           <div class="controls">
                                             <select id="select01" type="text" name="boutiques" class="chzn-select">
-                                                <option>Selectionnez</option>
+                                                <option></option>
                                               <option>Tunis</option>
                                               <option>Ben arous</option>
                                               <option>Sousse</option>
@@ -297,7 +297,7 @@ if (isset($_GET['nom'])){
                                           </div>
                                         </div>
                                         <div class="form-actions">
-                                          <input type="submit" name="modifier" value="Modifier" onclick="envoyer();" class="btn btn-primary">
+                                          <input type="submit" name="modifier" value="Modifier"  class="btn btn-primary">
                                           <input type="hidden" name="nom_ini" value="<?PHP echo $_GET['nom'];?>">
                                           <button type="reset" class="btn">Annuler</button>
                                           <a href="afficherEvennement.php " class="btn btn-primary">Afficher</a>
@@ -333,40 +333,6 @@ if (isset($_GET['nom'])){
     <script src="assets/form-validation.js"></script>
         
     <script src="assets/scripts.js"></script>
-        <script>
-
-    jQuery(document).ready(function() {   
-       FormValidation.init();
-    });
-    
-
-        $(function() {
-            $(".datepicker").datepicker();
-            $(".uniform_on").uniform();
-            $(".chzn-select").chosen();
-            $('.textarea').wysihtml5();
-
-            $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
-                var $total = navigation.find('li').length;
-                var $current = index+1;
-                var $percent = ($current/$total) * 100;
-                $('#rootwizard').find('.bar').css({width:$percent+'%'});
-                // If it's the last tab then hide the last button and show the finish instead
-                if($current >= $total) {
-                    $('#rootwizard').find('.pager .next').hide();
-                    $('#rootwizard').find('.pager .finish').show();
-                    $('#rootwizard').find('.pager .finish').removeClass('disabled');
-                } else {
-                    $('#rootwizard').find('.pager .next').show();
-                    $('#rootwizard').find('.pager .finish').hide();
-                }
-            }});
-            $('#rootwizard .finish').click(function() {
-                alert('Finished!, Starting over!');
-                $('#rootwizard').find("a[href*='tab1']").trigger('click');
-            });
-        });
-        </script>
 
 <?PHP
     }

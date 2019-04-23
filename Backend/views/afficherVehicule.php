@@ -165,7 +165,7 @@ $listeVehicules=$vehicule1C->afficherVehicules();
                         </li>
 
                         <li>
-                            <a href="evenement.html"><span class="badge badge-success pull-right">812</span> Evenements</a>
+                            <a href="evenement.php"><span class="badge badge-success pull-right">812</span> Evenements</a>
                         </li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
@@ -181,20 +181,14 @@ $listeVehicules=$vehicule1C->afficherVehicules();
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="Ajouter_Vehicule.html">Ajouter Vehicule</a>
+                                        <a href="Ajouter_vehicule.html">Ajouter Vehicule</a>
                                     </li>
                                     <li>
                                         <a href="afficherVehicule.php">Afficher Vehicule</a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="Ajouter_livraison.html">Ajouter Livraison</a>
-                                    </li>
-                                    <li>
-                                        <a href="Afficher_livraison.html">Afficher Livraison</a>
-                                    </li>
-                                    <li>
-                                        <a href="Modifier_livraison.html">Modifier Livraison</a>
+                                        <a href="afficherLivraison.php">Afficher Livraison</a>
                                     </li>
                                 </ul>
                             </li>

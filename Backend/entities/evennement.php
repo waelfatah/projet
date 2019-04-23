@@ -5,17 +5,17 @@ class Evennement{
 
 	private $nom;
 	private $date_deb;
-	private $periode;
+	private $date_fin;
 	private $boutiques;
 	private $description;
 
 
-	function __construct($nom,$date_deb,$periode,$boutiques,$description)
+	function __construct($nom,$date_deb,$date_fin,$boutiques,$description)
 	{	
 
 		$this->nom=$nom;
 		$this->date_deb=$date_deb;
-		$this->periode=$periode;
+		$this->date_fin=$date_fin;
 		$this->boutiques=$boutiques;
 		$this->description=$description;
 	}
@@ -29,9 +29,10 @@ class Evennement{
 		return $this->date_deb;
 	}
 
-	function getPeriode(){
-		return $this->periode;
+	function getDateFin(){
+		return $this->date_fin;
 	}
+
 
 	function getBoutiques(){
 		return $this->boutiques;
@@ -49,9 +50,10 @@ class Evennement{
 		$this->date_deb=$date_deb;
 	}
 
-	function setPeriode($periode){
-		$this->periode=$periode;
+	function setDateFin($date_fin){
+		$this->date_fin=$date_fin;
 	}
+
 
 	function setBoutiques($boutiques){
 		$this->boutiques=$boutiques;

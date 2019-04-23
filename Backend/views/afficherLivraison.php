@@ -163,7 +163,7 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                         </li>
 
                         <li>
-                            <a href="evenement.html"><span class="badge badge-success pull-right">812</span> Evenements</a>
+                            <a href="evenement.php"><span class="badge badge-success pull-right">812</span> Evenements</a>
                         </li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
@@ -232,57 +232,129 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                                 </div>
                             </div>
                         </div>
-                    </div>
-             <div class="row-fluid">
-                        <div class="span6">
-                            <!-- block -->
-                            <div class="block">
-                                <div class="navbar navbar-inner block-header">
-                                    <div class="muted pull-left">Livraisons</div>
-                                    <div class="pull-right"><span class="badge badge-info">1,234</span>
-
-                                    </div>
-                                </div>
-                                <div class="block-content collapse in">
-
-                                    <table  class="table table-striped">
+                    
+                     <div class="row-fluid">
+                        <!-- block -->
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">Livraisons</div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="span12">
+                                    
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                                        <thead>
 <tr>
-<td>Nom</td>
-<td>Prenom</td>
-<td>Cin</td>
-<td>Numero de telephone</td>
-<td>E-mail</td>
-<td>Adresse</td>
-<td>Supprimer</td>
+    <th onclick="sortTable(0)">Id </th>
+<th onclick="sortTable(0)">Nom </th>
+<th>Prenom</th>
+<th onclick="sortTable(0)">Cin</th>
+<th>Numero de telephone</th>
+<th onclick="sortTable(1)">E-mail</th>
+<th>Adresse</th>
+<th>Livreur</th>
+<th>Supprimer</th>
 </tr>
-
+</thead>
+<tbody>
 <?PHP
 foreach($listeLivraisons as $row){
     ?>
     <tr>
-    
+    <td><?PHP echo $row['id']; ?></td>
     <td><?PHP echo $row['nom']; ?></td>
     <td><?PHP echo $row['prenom']; ?></td>
     <td><?PHP echo $row['cin']; ?></td>
     <td><?PHP echo $row['numero']; ?></td>
     <td><?PHP echo $row['email']; ?></td>
     <td><?PHP echo $row['adresse']; ?></td>
+    <td><?PHP 
+        if (empty($row['livreur'])) {
+            ?>
+            <a href="affecterChauffeur.php?id=<?PHP echo $row['id']; ?>" class="btn btn-primary">
+    Affecter Livreur</a>
+            <?php
+        }
+        else {
+            echo $row['livreur'];
+        }
+     ?></td>
     <td><form method="POST" action="supprimerLivraison.php">
     <input type="submit" name="supprimer" value="Supprimer" class="btn btn-primary">
-    <input type="hidden" value="<?PHP echo $row['cin']; ?>" name="cin">
+    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
     </form>
     </td>
     </tr>
     <?PHP
 }
 ?>
-</table>
-</div>
-</div>
-</div>
-</div>
-
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
+                    </div>
+                        
         <!--/.fluid-container-->
+        <script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("example");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
         <script src="vendors/jquery-1.9.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="vendors/easypiechart/jquery.easy-pie-chart.js"></script>
@@ -291,6 +363,17 @@ foreach($listeLivraisons as $row){
         $(function() {
             // Easy pie charts
             $('.chart').easyPieChart({animate: 1000});
+        });
+        </script>
+                <script src="vendors/jquery-1.9.1.js"></script>
+        <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
+
+
+        <script src="assets/scripts.js"></script>
+        <script src="assets/DT_bootstrap.js"></script>
+        <script>
+        $(function() {
+            
         });
         </script>
     </body>

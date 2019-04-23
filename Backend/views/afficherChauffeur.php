@@ -165,7 +165,7 @@ $listeChauffeurs=$chauffeur1C->afficherChauffeurs();
                         </li>
 
                         <li>
-                            <a href="evenement.html"><span class="badge badge-success pull-right">812</span> Evenements</a>
+                            <a href="evenement.php"><span class="badge badge-success pull-right">812</span> Evenements</a>
                         </li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
@@ -252,8 +252,11 @@ $listeChauffeurs=$chauffeur1C->afficherChauffeurs();
 <th onclick="sortTable(0)">Cin</th>
 <th>Numero de telephone</th>
 <th onclick="sortTable(1)">E-mail</th>
-<th>supprimer</th>
-<th>modifier</th>
+<th>Etat</th>
+<th>Recclamation</th>
+<th>Vehicule</th>
+<th>Supprimer</th>
+<th>Modifier</th>
 </tr>
 </thead>
 <tbody>
@@ -267,6 +270,19 @@ foreach($listeChauffeurs as $row){
     <td><?PHP echo $row['cin']; ?></td>
     <td><?PHP echo $row['numero']; ?></td>
     <td><?PHP echo $row['email']; ?></td>
+    <td><?PHP echo $row['etat']; ?></td>
+    <td><?PHP echo $row['recc']; ?></td>
+    <td><?PHP 
+        if (empty($row['vehicule'])) {
+            ?>
+            <a href="affecterVehicule.php?cin=<?PHP echo $row['cin']; ?>" class="btn btn-primary">
+    Affecter Vehicule</a>
+            <?php
+        }
+        else {
+            echo $row['vehicule'];
+        }
+     ?></td>
     <td><form method="POST" action="supprimerChauffeur.php">
     <input type="submit" name="supprimer" value="Supprimer" class="btn btn-primary">
     <input type="hidden" value="<?PHP echo $row['cin']; ?>" name="cin">

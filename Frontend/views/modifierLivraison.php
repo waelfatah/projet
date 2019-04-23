@@ -45,16 +45,18 @@
 <?PHP
 include "../entities/livraison.php";
 include "../core/livraisonC.php";
-if (isset($_GET['cin'])){
+if (isset($_GET['id'])){
 	$livraisonC=new LivraisonC();
-    $result=$livraisonC->recupererLivraison($_GET['cin']);
+    $result=$livraisonC->recupererLivraison($_GET['id']);
 	foreach($result as $row){
+		$id=$row['id'];
 		$nom=$row['nom'];
 		$prenom=$row['prenom'];
 		$cin=$row['cin'];
 		$numero=$row['numero'];
 		$email=$row['email'];
 		$adresse=$row['adresse'];
+		$livreur=$row['livreur'];
 ?>
 	<header class="header1">
 		<!-- Header desktop -->
@@ -446,12 +448,11 @@ if (isset($_GET['cin'])){
 						<div class="bo4 of-hidden size15 m-b-20">
 							<input  class="sizefull s-text7 p-l-22 p-r-22" type="text" name="adresse" value="<?PHP echo $adresse ?>" >
 						</div>						
-
-
+	
 						<div class="w-size25">
 							<!-- Button -->
 							<input type="submit"  class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" value="Modifier" name="modifier">
-							<input type="hidden" name="cin_ini" value="<?PHP echo $_GET['cin'];?>">
+							<input type="hidden" name="cin_ini" value="<?PHP echo $_GET['id'];?>">
 						</div>
 					</form>
 				</div>
@@ -675,7 +676,7 @@ if (isset($_GET['cin'])){
 	}
 }
 if (isset($_POST['modifier'])){
-	$livraison=new livraison($_POST['nom'],$_POST['prenom'],$_POST['cin'],$_POST['numero'],$_POST['email'],$_POST['adresse']);
+	$livraison=new livraison($id,$_POST['nom'],$_POST['prenom'],$_POST['cin'],$_POST['numero'],$_POST['email'],$_POST['adresse'],$livreur);
 	$livraisonC->modifierLivraison($livraison,$_POST['cin_ini']);
 	//echo $_POST['cin_ini'];
 	header('Location: afficherLivraison.php');

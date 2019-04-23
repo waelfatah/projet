@@ -2,7 +2,10 @@
 <html class="no-js">
     
     <head>
+
         <title>Ajouter Vehicule</title>
+            <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap -->
         <link rel="icon" type="image/png" href="icons8-shopping-64.png"/>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -14,7 +17,8 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script type="text/javascript" src="controle.js"></script>
+        <script type="text/javascript" src="vehicule.js"></script>
+        
     </head>
     
     <body>
@@ -158,7 +162,7 @@
                             <a href="interface.html"><i class="icon-chevron-right"></i> UI & Interface</a>
                         </li>
                         <li>
-                            <a href="evenement.html"><span class="badge badge-success pull-right">731</span> Events</a>
+                            <a href="evenement.php"><span class="badge badge-success pull-right">731</span> Events</a>
                         </li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
@@ -181,13 +185,7 @@
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="Ajouter_livraison.html">Ajouter Livraison</a>
-                                    </li>
-                                    <li>
-                                        <a href="Afficher_livraison.html">Afficher Livraison</a>
-                                    </li>
-                                    <li>
-                                        <a href="Modifier_livraison.html">Modifier Livraison</a>
+                                        <a href="afficherLivraison.php">Afficher Livraison</a>
                                     </li>
                                 </ul>
                             </li>
@@ -226,7 +224,7 @@
                                         <div class="control-group">
                                           <label class="control-label" for="typeahead">Matricule</label>
                                           <div class="controls">
-                                            <input type="text" class="span6" name="matricule"  data-provide="typeahead" data-items="4" >
+                                            <input id="mat" type="text" class="span6" name="matricule"  data-provide="typeahead" data-items="4" required>
                                             
                                           </div>
                                         </div>
@@ -235,7 +233,7 @@
                                           <label class="control-label" for="select01">Type</label>
                                           <div class="controls">
                                             <select id="select01" name="genre" class="chzn-select">
-                                                <option> Selectionner</option>
+                                                <option></option>
                                               <option>Voiture</option>
                                               <option>Camion</option>
                                             </select>
@@ -255,6 +253,7 @@
             
             </div>
         </div>
+</div>
 
 
         <!--/.fluid-container-->
@@ -276,43 +275,10 @@
         <script src="vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
 
     <script type="text/javascript" src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="assets/form-validation.js"></script>
         
     <script src="assets/scripts.js"></script>
-        <script>
-
-    jQuery(document).ready(function() {   
-       FormValidation.init();
-    });
-    
-
-        $(function() {
-            $(".datepicker").datepicker();
-            $(".uniform_on").uniform();
-            $(".chzn-select").chosen();
-            $('.textarea').wysihtml5();
-
-            $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
-                var $total = navigation.find('li').length;
-                var $current = index+1;
-                var $percent = ($current/$total) * 100;
-                $('#rootwizard').find('.bar').css({width:$percent+'%'});
-                // If it's the last tab then hide the last button and show the finish instead
-                if($current >= $total) {
-                    $('#rootwizard').find('.pager .next').hide();
-                    $('#rootwizard').find('.pager .finish').show();
-                    $('#rootwizard').find('.pager .finish').removeClass('disabled');
-                } else {
-                    $('#rootwizard').find('.pager .next').show();
-                    $('#rootwizard').find('.pager .finish').hide();
-                }
-            }});
-            $('#rootwizard .finish').click(function() {
-                alert('Finished!, Starting over!');
-                $('#rootwizard').find("a[href*='tab1']").trigger('click');
-            });
-        });
-        </script>
+    <script src="js/main.js"></script>
+        </form>
     </body>
 
 </html>

@@ -1,14 +1,18 @@
 <?php
 include "../core/chauffeurC.php";
+include "../entities/chauffeur.php";
 $chauffeur1C=new ChauffeurC();
 $listeChauffeurs=$chauffeur1C->afficherChauffeurs();
+
+
+
 
 //var_dump($listeEmployes->fetchAll());
 ?>
 </table>
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <title>Afficher Chauffeur</title>
         <!-- Bootstrap -->
@@ -244,16 +248,21 @@ $listeChauffeurs=$chauffeur1C->afficherChauffeurs();
                             <div class="block-content collapse in">
                                 <div class="span12">
                                     
-                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                                    <table id="indextable" class="table table-striped">
                                         <thead>
+                                            <form action="rechercheChauffeur.php">
+                                            <label class="control-label" for="focusedInput">Recherche</label>
+                                            <input type="text" name="recherche" class="muted pull-left">
+                                            <button type="submit" class="muted pull-left"><img src="https://img.icons8.com/small/16/000000/search.png"></button>
+                                            </form>
 <tr>
-<th onclick="sortTable(0)">Nom </th>
-<th>Prenom</th>
-<th onclick="sortTable(0)">Cin</th>
-<th>Numero de telephone</th>
-<th onclick="sortTable(1)">E-mail</th>
-<th>Etat</th>
-<th>Recclamation</th>
+<th><a href="#" onclick="SortTable(0 ,'T');">Nom</a></th>
+<th><a href="#" onclick="SortTable(1 ,'T');">Prenom</th>
+<th><a href="#" onclick="SortTable(2 ,'N');">Cin</th>
+<th><a href="#" onclick="SortTable(3 ,'N');">Numero de telephone</th>
+<th>E-mail</th>
+<th><a href="#" onclick="SortTable(5 ,'T');">Etat</th>
+<th><a href="#" onclick="SortTable(6 ,'N');">Recclamation</th>
 <th>Vehicule</th>
 <th>Supprimer</th>
 <th>Modifier</th>
@@ -271,7 +280,11 @@ foreach($listeChauffeurs as $row){
     <td><?PHP echo $row['numero']; ?></td>
     <td><?PHP echo $row['email']; ?></td>
     <td><?PHP echo $row['etat']; ?></td>
-    <td><?PHP echo $row['recc']; ?></td>
+    <td><?PHP 
+    $nbrecc=$chauffeur1C->suppAutoChauffeur($row['cin']);
+        $result=$nbrecc->fetch();
+        echo $result[0];    
+      ?></td>
     <td><?PHP 
         if (empty($row['vehicule'])) {
             ?>
@@ -293,7 +306,9 @@ foreach($listeChauffeurs as $row){
     </tr>
     <?PHP
 }
+
 ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -304,61 +319,100 @@ foreach($listeChauffeurs as $row){
                     </div>
 
         <!--/.fluid-container-->
-        <script>
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("example");
-  switching = true;
-  //Set the sorting direction to ascending:
-  dir = "asc"; 
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
+<script type="text/javascript">
+var TableIDvalue = "indextable";
+var TableLastSortedColumn = -1;
+function SortTable() {
+var sortColumn = parseInt(arguments[0]);
+var type = arguments.length > 1 ? arguments[1] : 'T';
+var dateformat = arguments.length > 2 ? arguments[2] : '';
+var table = document.getElementById(TableIDvalue);
+var tbody = table.getElementsByTagName("tbody")[0];
+var rows = tbody.getElementsByTagName("tr");
+var arrayOfRows = new Array();
+type = type.toUpperCase();
+dateformat = dateformat.toLowerCase();
+for(var i=0, len=rows.length; i<len; i++) {
+    arrayOfRows[i] = new Object;
+    arrayOfRows[i].oldIndex = i;
+    var celltext = rows[i].getElementsByTagName("td")[sortColumn].innerHTML.replace(/<[^>]*>/g,"");
+    if( type=='D' ) { arrayOfRows[i].value = GetDateSortingKey(dateformat,celltext); }
+    else {
+        var re = type=="N" ? /[^\.\-\+\d]/g : /[^a-zA-Z0-9]/g;
+        arrayOfRows[i].value = celltext.replace(re,"").substr(0,25).toLowerCase();
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
+    }
+if (sortColumn == TableLastSortedColumn) { arrayOfRows.reverse(); }
+else {
+    TableLastSortedColumn = sortColumn;
+    switch(type) {
+        case "N" : arrayOfRows.sort(CompareRowOfNumbers); break;
+        case "D" : arrayOfRows.sort(CompareRowOfNumbers); break;
+        default  : arrayOfRows.sort(CompareRowOfText);
         }
-      }
     }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      //Each time a switch is done, increase this count by 1:
-      switchcount ++;      
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
+var newTableBody = document.createElement("tbody");
+for(var i=0, len=arrayOfRows.length; i<len; i++) {
+    newTableBody.appendChild(rows[arrayOfRows[i].oldIndex].cloneNode(true));
     }
-  }
-}
+table.replaceChild(newTableBody,tbody);
+} // function SortTable()
+
+function CompareRowOfText(a,b) {
+var aval = a.value;
+var bval = b.value;
+return( aval == bval ? 0 : (aval > bval ? 1 : -1) );
+} // function CompareRowOfText()
+
+function CompareRowOfNumbers(a,b) {
+var aval = /\d/.test(a.value) ? parseFloat(a.value) : 0;
+var bval = /\d/.test(b.value) ? parseFloat(b.value) : 0;
+return( aval == bval ? 0 : (aval > bval ? 1 : -1) );
+} // function CompareRowOfNumbers()
+
+function GetDateSortingKey(format,text) {
+if( format.length < 1 ) { return ""; }
+format = format.toLowerCase();
+text = text.toLowerCase();
+text = text.replace(/^[^a-z0-9]*/,"");
+text = text.replace(/[^a-z0-9]*$/,"");
+if( text.length < 1 ) { return ""; }
+text = text.replace(/[^a-z0-9]+/g,",");
+var date = text.split(",");
+if( date.length < 3 ) { return ""; }
+var d=0, m=0, y=0;
+for( var i=0; i<3; i++ ) {
+    var ts = format.substr(i,1);
+    if( ts == "d" ) { d = date[i]; }
+    else if( ts == "m" ) { m = date[i]; }
+    else if( ts == "y" ) { y = date[i]; }
+    }
+d = d.replace(/^0/,"");
+if( d < 10 ) { d = "0" + d; }
+if( /[a-z]/.test(m) ) {
+    m = m.substr(0,3);
+    switch(m) {
+        case "jan" : m = String(1); break;
+        case "feb" : m = String(2); break;
+        case "mar" : m = String(3); break;
+        case "apr" : m = String(4); break;
+        case "may" : m = String(5); break;
+        case "jun" : m = String(6); break;
+        case "jul" : m = String(7); break;
+        case "aug" : m = String(8); break;
+        case "sep" : m = String(9); break;
+        case "oct" : m = String(10); break;
+        case "nov" : m = String(11); break;
+        case "dec" : m = String(12); break;
+        default    : m = String(0);
+        }
+    }
+m = m.replace(/^0/,"");
+if( m < 10 ) { m = "0" + m; }
+y = parseInt(y);
+if( y < 100 ) { y = parseInt(y) + 2000; }
+return "" + String(y) + "" + String(m) + "" + String(d) + "";
+} // function GetDateSortingKey()
 </script>
         <script src="vendors/jquery-1.9.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>

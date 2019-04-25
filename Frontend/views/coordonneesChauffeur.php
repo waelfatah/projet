@@ -1,19 +1,8 @@
-<?php
-include "../core/livraisonC.php";
-$livraison1C=new LivraisonC();
-$chauffeur=$livraison1C->getChauffeur($_GET['livreur']);
-	foreach($chauffeur as $row){
-		$nom=$row['nom'];
-		$prenom=$row['prenom'];
-		$cin=$row['cin'];
-		$numero=$row['numero'];
-		$email=$row['email'];
-		$adresse=$row['adresse'];
-		$recc=$row['recc'];
-		$vehicule=$row['vehicule'];
-		
-?>
 
+<?php
+
+include "../core/livraisonC.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +38,23 @@ $chauffeur=$livraison1C->getChauffeur($_GET['livreur']);
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
+<?php
+
+$livraison1C=new LivraisonC();
+$chauffeur=$livraison1C->getChauffeur($_GET['livreur']);
+
+	foreach($chauffeur as $row){
+		$nom=$row['nom'];
+		$prenom=$row['prenom'];
+		$cin=$row['cin'];
+		$numero=$row['numero'];
+		$email=$row['email'];
+		$adresse=$row['adresse'];
+		$recc=$row['recc'];
+		$vehicule=$row['vehicule'];
+		
+		
+?>
 
 	<!-- Header -->
 	<header class="header1">
@@ -433,19 +439,20 @@ $chauffeur=$livraison1C->getChauffeur($_GET['livreur']);
 					<br><br>
 					<label>Feedback Livreur</label>
 					<br>
-					<form method="POST" action="ajouterRecclamation.php">
+					<form method="POST" action="ajouterRecc.php">
 					                                            <label class="uniform">
-                                              <input class="uniform_on" type="radio" id="optionsCheckbox" value="Positive" name="recc">
+                                              <input class="uniform_on" type="radio" id="optionsCheckbox" value="Positive" name="type">
                                               <img src="https://img.icons8.com/nolan/64/000000/happy.png">
                                             </label>
+                                            <input type="hidden" name="id_chauffeur" value="<?PHP echo $cin ?>">
                                             <br>
 
                      					                                            <label class="uniform">
-                                              <input class="uniform_on" type="radio" id="optionsCheckbox" value="Positive" name="recc">
+                                              <input class="uniform_on" type="radio" id="optionsCheckbox" value="Negative" name="type">
                                               <img src="https://img.icons8.com/nolan/64/000000/sad.png">
                                             </label>   
                                             <br>       
-					<button><img src="https://img.icons8.com/dusk/64/000000/submit-progress.png"></button>
+					<button type="submit" name="ajouter"><img src="https://img.icons8.com/nolan/64/000000/downloading-updates.png"></button>
 					</form>
 				</div>
 

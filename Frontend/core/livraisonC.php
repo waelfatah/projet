@@ -44,7 +44,7 @@ function afficherLivraison ($livraison){
 	}
 
 	function getChauffeur($livreur){
-		$sql="SELECT * From livraison inner join chauffeur on chauffeur.numero=livraison.livreur where chauffeur.numero=$livreur";
+		$sql="SELECT * From livraison inner join chauffeur on chauffeur.numero=livraison.livreur";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -87,10 +87,10 @@ function afficherLivraison ($livraison){
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 try{		
         $req=$db->prepare($sql);
-        $id=$livraison->getId();
+        $idn=$livraison->getId();
         $nom=$livraison->getNom();
         $prenom=$livraison->getPrenom();
-        $cinn=$livraison->getCin();
+        $cin=$livraison->getCin();
         $numero=$livraison->getNumero();
         $email=$livraison->getMail();
         $adresse=$livraison->getAdresse();
@@ -99,7 +99,7 @@ try{
 		$req->bindValue(':id',$id);
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':prenom',$prenom);
-		$req->bindValue(':cinn',$cinn);
+		$req->bindValue(':idn',$idn);
 		$req->bindValue(':cin',$cin);
 		$req->bindValue(':numero',$numero);
 		$req->bindValue(':email',$email);

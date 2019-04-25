@@ -292,10 +292,9 @@ if (isset($_GET['id'])){
     <td><?PHP echo $email ?></td>
     <td><?PHP echo $adresse ?></td>
     <td><select name="livreur">
-            <option><?PHP echo $row['livreur']; ?></option>
                 <?php
                     foreach ($results as $output) { ?>
-                        <option value="<?php echo $output["numero"] ?>" > <?php echo $output["numero"] ?></option>
+                        <option> <?php echo $output["numero"]; ?></option>
 
                 <?php } ?>
             

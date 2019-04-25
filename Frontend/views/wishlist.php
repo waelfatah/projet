@@ -1,8 +1,16 @@
+<?php
+require "_header.php";?>
+<?php
+if(isset($_GET['del1'])){
+	$wishlist->del1($_GET['del1']);
+}
+?>
 
-</table>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<title>Casa Sport</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,15 +44,7 @@
 
 </head>
 <body class="animsition">
-<?php
-include "../core/livraisonC.php";
-$livraison1C=new LivraisonC();
-$listeLivraisons=$livraison1C->afficherLivraisons();
-$chauffeur=$livraison1C->getChauffeur($_GET['livreur']);
-foreach ($chauffeur as $result) {
-	$cin_chauffeur=$result['cin'];
-}
-?>
+
 	<!-- Header -->
 	<header class="header1">
 		<!-- Header desktop -->
@@ -90,11 +90,11 @@ foreach ($chauffeur as $result) {
 								</ul>
 							</li>
 							<li>
-								<a href="product.html">Matériel</a>
+								<a href="product1.php">Matériel</a>
 							</li>
 
 							<li class="sale-noti">
-								<a href="product.html">Top Vente</a>
+								<a href="product1.php">Top Vente</a>
 							</li>
 
 							<li>
@@ -107,8 +107,7 @@ foreach ($chauffeur as $result) {
 						</ul>
 					</nav>
 				</div>
-					
-				<!-- Header Icon -->
+			<!-- Header Icon -->
 				<div class="header-icons">
 					<a href="#" class="header-wrapicon1 dis-block">
 						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
@@ -118,76 +117,72 @@ foreach ($chauffeur as $result) {
 
 					<div class="header-wrapicon2">
 						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+						<span class="header-icons-noti"><?=$panier->count();?></span>
+					
+		
+						  
 
 						<!-- Header cart noti -->
-						<div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
-									</div>
+		<?php
+						$ids = array_keys($_SESSION['panier']);
+if(empty($ids)){
+	$products=array();
+}else{
+$products = $DB->query("SELECT * FROM products WHERE id IN (".implode(',',$ids).')');}?>
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
+            <div class="header-cart header-dropdown">
 
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
+<?php foreach ($products as $product): ?>
 
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+              <ul class="header-cart-wrapitem">
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
+                <li class="header-cart-item">
 
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
+         
+                  <div class="header-cart-item-img">
+                    <img src="<?=$product->id;?>.jpg" alt="IMG">
+                  </div>
 
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
+                  <div class="header-cart-item-txt">
+                    <a href="product-detail.html?id=<?= $product->id; ?>" class="header-cart-item-name">
+                     <?=$product->name;?>
+                    </a>
 
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
-							</ul>
+             
+                        
+                  </div>
+                </li>
 
-							<div class="header-cart-total">
-								Total: $75.00
-							</div>
 
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
+               
+
+                
+              </ul>
+                 <?php endforeach?>
+
+             
+
+              <div class="header-cart-buttons">
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                    View Cart
+                  </a>
+                </div>
+
+                <div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="livraison.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
+									<a href="wishlist.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Wishlist
 									</a>
 								</div>
 							</div>
@@ -228,7 +223,7 @@ foreach ($chauffeur as $result) {
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+										momo
 										</a>
 
 										<span class="header-cart-item-info">
@@ -271,7 +266,7 @@ foreach ($chauffeur as $result) {
 							</ul>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								Total: $13424
 							</div>
 
 							<div class="header-cart-buttons">
@@ -347,11 +342,11 @@ foreach ($chauffeur as $result) {
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="product1.php">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Sale</a>
+						<a href="product1.php">Sale</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -377,11 +372,12 @@ foreach ($chauffeur as $result) {
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
 		<h2 class="l-text2 t-center">
-			Cart
+			WISHLIST
 		</h2>
 	</section>
 
 	<!-- Cart -->
+	
 	<section class="cart bgwhite p-t-70 p-b-100">
 		<div class="container">
 			<!-- Cart item -->
@@ -389,48 +385,415 @@ foreach ($chauffeur as $result) {
 				<div class="wrap-table-shopping-cart bgwhite">
 					<table class="table-shopping-cart">
 						<tr class="table-head">
-							<th class="column-1">Id</th>
-							<th class="column-1">Nom</th>
-							<th class="column-1">Prenom</th>
-							<th class="column-1">Cin</th>
-							<th class="column-1">Telephone</th>
-							<th class="column-1">E-mail</th>
-							<th class="column-1">Adresse</th>
-							<th class="column-1">Livreur</th>
-							<th class="column-1">Supprimer</th>
-							<th class="column-1">Modifier</th>
+							<th class="column-1"></th>
+							<th class="column-2"><br>Product</br></th>
+							<th class="column-3">
+							
+							
+
+						
+							
 						</tr>
-<?PHP
-foreach($listeLivraisons as $row){
-    ?>
-    <tr>
-    <td class="column-1"><?PHP echo $row['id']; ?></td>
-    <td class="column-1"><?PHP echo $row['nom']; ?></td>
-    <td class="column-1"><?PHP echo $row['prenom']; ?></td>
-    <td class="column-1"><?PHP echo $row['cin']; ?></td>
-    <td class="column-1"><?PHP echo $row['numero']; ?></td>
-    <td class="column-1"><?PHP echo $row['email']; ?></td>
-    <td class="column-1"><?PHP echo $row['adresse']; ?></td>
-    <td class="column-1"><a href="coordonneesChauffeur.php?livreur=<?PHP echo $row['livreur']; ?>"><?PHP echo $row['livreur'];?></a></td>
-    <td class="column-1"><form method="POST" action="supprimerLivraison.php">
-    <button><img src="https://img.icons8.com/dusk/64/000000/cancel.png"></button>
-    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-    </form>
-    </td>
-    <td class="column-1">
-    	<a href="modifierLivraison.php?id=<?PHP echo $row['id']; ?>" >
-    <img src="https://img.icons8.com/dusk/64/000000/multi-edit.png"></a></td>
-    </tr>
-    <?PHP
-}
-?>
+
+						<tr class="table-row">
+							<?php 
+
+
+
+$ids = array_keys($_SESSION['wishlist']);
+if(empty($ids)){
+	$products=array();
+}else{
+$products = $DB->query("SELECT * FROM products WHERE id IN (".implode(',',$ids).')');}
+								foreach ($products as $product):?>
+							<td class="column-1">
+								<div class="cart-img-product b-rad-4 o-f-hidden">
+									<img src="<?=$product->id;?>.jpg" alt="IMG-PRODUCT">
+								</div>
+							</td>
+								&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+							&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						<div>
+							<td class="column-2"><?=$product->name;?></td>
+
+							
+							</div>
+								&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+							&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+							&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						
+			
+							<div>
+								<td class="column-3"><a href="wishlist.php?del1=<?= $product->id; ?>"class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4";>supprimer</a></td>
+							
+							</div>
+
+						&nbsp; 
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+
+
+							
+							
+							
+								
+								
+
+								
+								</div>
+
+
+							</td>
+
+
+						
+
+							
+
+						</tr>
+					
+
+
+						
 					</table>
 				</div>
 			</div>
+			
+
+			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
+				<div class="flex-w flex-m w-full-sm">
+					
+					
+
+
+						
+						&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							
+						
+							
+
+								<?php endforeach;?>
+					
+					</div>
+				</div>
 
 
 			<!-- Total -->
+			<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
+				<h5 class="m-text20 p-b-24">
+					Cart Totals
+				</h5>
+
+				<!--  -->
+				<div class="flex-w flex-sb-m p-b-12">
+					<span class="s-text18 w-size19 w-full-sm">
+						Subtotal:
+					</span>
+
+					<span class="m-text21 w-size20 w-full-sm">
+						$39.00
+					</span>
+				</div>
+
+				<!--  -->
+				<div class="flex-w flex-sb bo10 p-t-15 p-b-20">
+					<span class="s-text18 w-size19 w-full-sm">
+						Shipping:
+					</span>
+
+					<div class="w-size20 w-full-sm">
+						<p class="s-text8 p-b-23">
+							There are no shipping methods available. Please double check your address, or contact us if you need any help.
+						</p>
+
+						<span class="s-text19">
+							Calculate Shipping
+						</span>
+
+						<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
+							<select class="selection-2" name="country">
+								<option>Select a country...</option>
+								<option>US</option>
+								<option>UK</option>
+								<option>Japan</option>
+							</select>
+						</div>
+
+						<div class="size13 bo4 m-b-12">
+						<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
+						</div>
+
+						<div class="size13 bo4 m-b-22">
+							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
+						</div>
+
+						<div class="size14 trans-0-4 m-b-10">
+							<!-- Button -->
+							<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+								Update Totals
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!--  -->
+				<div class="flex-w flex-sb-m p-t-26 p-b-30">
+					<span class="m-text22 w-size19 w-full-sm">
+						Total:
+					</span>
+
+					<span class="m-text21 w-size20 w-full-sm">
+						$39.00
+					</span>
+				</div>
+
+				<div class="size15 trans-0-4">
+					<!-- Button -->
+					<button onclick="window.location.href='livraison.html'" type="button" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+						Proceed to Checkout
+					</button>
+				</div>
+			</div>
 		</div>
+
 	</section>
 
 

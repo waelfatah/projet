@@ -1,14 +1,20 @@
 <?php
-include "../core/livraisonC.php";
-$livraison1C=new LivraisonC();
-$listeLivraisons=$livraison1C->afficherLivraisons();
+include "../core/chauffeurC.php";
+include "../entities/chauffeur.php";
+$chauffeur1C=new ChauffeurC();
+$listeChauffeurs=$chauffeur1C->rechercherListeChauffeurs($_GET['recherche']);
+
+
+
+
+//var_dump($listeEmployes->fetchAll());
 ?>
 </table>
 <!DOCTYPE html>
 <html>
-    
+
     <head>
-        <title>Afficher Livraison</title>
+        <title>Afficher Chauffeur</title>
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
@@ -186,7 +192,7 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="Afficher_livraison.html">Afficher Livraison</a>
+                                        <a href="afficherLivraison.php">Afficher Livraison</a>
                                     </li>
                                 </ul>
                             </li>
@@ -237,68 +243,81 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                         <!-- block -->
                         <div class="block">
                             <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left">Livraisons</div>
+                                <div class="muted pull-left">Chauffeurs</div>
                             </div>
                             <div class="block-content collapse in">
                                 <div class="span12">
                                     
                                     <table class="table table-striped">
                                         <thead>
+                                            <form action="rechercheChauffeur.php">
+                                            <label class="control-label" for="focusedInput">Recherche</label>
+                                            <input type="text" name="recherche" class="muted pull-left">
+                                            <button type="submit" class="muted pull-left"><img src="https://img.icons8.com/small/16/000000/search.png"></button>
+                                            </form>
 <tr>
-    <th onclick="sortTable(0)">Id </th>
 <th onclick="sortTable(0)">Nom </th>
 <th>Prenom</th>
 <th onclick="sortTable(0)">Cin</th>
 <th>Numero de telephone</th>
 <th onclick="sortTable(1)">E-mail</th>
-<th>Adresse</th>
-<th>Livreur</th>
+<th>Etat</th>
+<th>Recclamation</th>
+<th>Vehicule</th>
 <th>Supprimer</th>
+<th>Modifier</th>
 </tr>
 </thead>
 <tbody>
 <?PHP
-foreach($listeLivraisons as $row){  
-
+foreach($listeChauffeurs as $row){
     ?>
     <tr>
-    <td><?PHP echo $row['id']; ?></td>
+    
     <td><?PHP echo $row['nom']; ?></td>
     <td><?PHP echo $row['prenom']; ?></td>
     <td><?PHP echo $row['cin']; ?></td>
     <td><?PHP echo $row['numero']; ?></td>
     <td><?PHP echo $row['email']; ?></td>
-    <td><?PHP echo $row['adresse']; ?></td>
+    <td><?PHP echo $row['etat']; ?></td>
     <td><?PHP 
-        if (empty($row['livreur'])) {
+    $nbrecc=$chauffeur1C->suppAutoChauffeur($row['cin']);
+        $result=$nbrecc->fetch();
+        echo $result[0];    
+      ?></td>
+    <td><?PHP 
+        if (empty($row['vehicule'])) {
             ?>
-            <a href="affecterChauffeur.php?id=<?PHP echo $row['id']; ?>" class="btn btn-primary">
-    Affecter Livreur</a>
+            <a href="affecterVehicule.php?cin=<?PHP echo $row['cin']; ?>" class="btn btn-primary">
+    Affecter Vehicule</a>
             <?php
         }
         else {
-            echo $row['livreur'];
+            echo $row['vehicule'];
         }
      ?></td>
-    <td><form method="POST" action="supprimerLivraison.php">
+    <td><form method="POST" action="supprimerChauffeur.php">
     <input type="submit" name="supprimer" value="Supprimer" class="btn btn-primary">
-    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
+    <input type="hidden" value="<?PHP echo $row['cin']; ?>" name="cin">
     </form>
     </td>
+    <td><a href="modifierChauffeur.php?cin=<?PHP echo $row['cin']; ?>" class="btn btn-primary">
+    Modifier</a></td>
     </tr>
     <?PHP
 }
+
 ?>
+
                                         </tbody>
                                     </table>
-                                    
                                 </div>
                             </div>
                         </div>
                         <!-- /block -->
                     </div>
                     </div>
-                        
+
         <!--/.fluid-container-->
         <script>
 function sortTable(n) {

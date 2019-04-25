@@ -45,6 +45,20 @@ function afficherChauffeur ($chauffeur){
 		
 	}
 	
+	function suppAutoChauffeur($cin){
+		$sql="SELECT COUNT(*) From recchauffeur where id_chauffeur=".$cin."";
+		$db = config::getConnexion();
+		try{
+		$liste=$db->query($sql);
+		$req;
+		return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+	}
+
+
 	function afficherChauffeurs(){
 		//$sql="SElECT * From chauffeur e inner join formationphp.chauffeur a on e.cin= a.cin";
 		$sql="SELECT * From chauffeur";
@@ -121,8 +135,8 @@ try{
         }
 	}
 	
-	function rechercherListeChauffeurs($cinn){
-		$sql="SELECT * from chauffeur where cin=$cinn";
+	function rechercherListeChauffeurs($recherche){
+		$sql="SELECT * from chauffeur where cin like '%$recherche%' or nom like '%$recherche%' or prenom like '%$recherche%'or numero like '%$recherche%'or email like '%$recherche%' or etat like '%$recherche%'or recc like '%$recherche%' or vehicule like '%$recherche%'";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);

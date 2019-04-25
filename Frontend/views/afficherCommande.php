@@ -1,28 +1,33 @@
 <?php
-include "../core/livraisonC.php";
-$livraison1C=new LivraisonC();
-$listeLivraisons=$livraison1C->afficherLivraisons();
+require "../tuto/_header.php";
+$panier=new panier(2,"IBM",2,"hello");
+$liste=$panier->rechercherCommande($_GET['recherche']);
+
 ?>
-</table>
+
+<?php
+if(isset($_GET['del1'])){
+    $wishlist->del1($_GET['del1']);
+}
+?>
+
 <!DOCTYPE html>
 <html>
     
     <head>
-        <title>Afficher Livraison</title>
+        <title>Buttons & Icons</title>
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link href="assets/styles.css" rel="stylesheet" media="screen">
-        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
-
-        <body>
-
+    
+    <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
@@ -34,7 +39,7 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Wael Fatah <i class="caret"></i>
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Vincent Gabriel <i class="caret"></i>
 
                                 </a>
                                 <ul class="dropdown-menu">
@@ -59,6 +64,8 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                                 <ul class="dropdown-menu" id="menu1">
                                     <li>
                                         <a href="#">Tools <i class="icon-arrow-right"></i>
+
+
 
                                         </a>
                                         <ul class="dropdown-menu sub-menu">
@@ -146,14 +153,14 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                         <li>
                             <a href="stats.html"><i class="icon-chevron-right"></i> Statistics (Charts)</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="form.html"><i class="icon-chevron-right"></i> Forms</a>
                         </li>
                         <li>
                             <a href="tables.html"><i class="icon-chevron-right"></i> Tables</a>
                         </li>
-                        <li>
-                            <a href="buttons.html"><i class="icon-chevron-right"></i> Buttons & Icons</a>
+                        <li class="active">
+                            <a href="buttons.php"><i class="icon-chevron-right"></i> Wishlist</a>
                         </li>
                         <li>
                             <a href="editors.html"><i class="icon-chevron-right"></i> WYSIWYG Editors</a>
@@ -161,36 +168,12 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                         <li>
                             <a href="interface.html"><i class="icon-chevron-right"></i> UI & Interface</a>
                         </li>
-
                         <li>
-                            <a href="evenement.php"><span class="badge badge-success pull-right">812</span> Evenements</a>
+                            <a href="#"><span class="badge badge-success pull-right">731</span> Orders</a>
                         </li>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Livraison <b class="caret"></b>
-
-                                </a>
-                                <ul class="dropdown-menu" id="menu1">
-
-                                    <li>
-                                        <a href="Ajouter_chauffeur.html">Ajouter Chauffeur</a>
-                                    </li>
-                                    <li>
-                                        <a href="afficherChauffeur.php">Afficher Chauffeur</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="Ajouter_vehicule.html">Ajouter Vehicule</a>
-                                    </li>
-                                    <li>
-                                        <a href="afficherVehicule.php">Afficher Vehicule</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="Afficher_livraison.html">Afficher Livraison</a>
-                                    </li>
-                                </ul>
-                            </li>
                         <li>
+                            <a href="#"><span class="badge badge-success pull-right">812</span> Invoices</a>
+                        </li>
                         <li>
                             <a href="#"><span class="badge badge-info pull-right">27</span> Clients</a>
                         </li>
@@ -211,173 +194,209 @@ $listeLivraisons=$livraison1C->afficherLivraisons();
                         </li>
                     </ul>
                 </div>
+             
+            <!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+body {
+    background-color: #f6f6ff;
+    font-family: Calibri, Myriad;
+}
+
+#main {
+    width: 780px;
+    padding: 20px;
+    margin: auto;
+}
+
+table.timecard {
+    margin: auto;
+    width: 600px;
+    border-collapse: collapse;
+    border: 1px solid #fff; /*for older IE*/
+    border-style: hidden;
+}
+
+table.timecard caption {
+    background-color: #f79646;
+    color: #fff;
+    font-size: x-large;
+    font-weight: bold;
+    letter-spacing: .3em;
+}
+
+table.timecard thead th {
+    padding: 8px;
+    background-color: #fde9d9;
+    font-size: large;
+}
+
+table.timecard thead th#thDay {
+    width: 40%; 
+}
+
+table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.timecard thead th#thTotal {
+    width: 20%;
+}
+
+table.timecard th, table.timecard td {
+    padding: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #f79646 #ccc;
+}
+
+table.timecard td {
+    text-align: right;
+}
+
+table.timecard tbody th {
+    text-align: left;
+    font-weight: normal;
+}
+
+table.timecard tfoot {
+    font-weight: bold;
+    font-size: large;
+    background-color: #687886;
+    color: #fff;
+}
+
+table.timecard tr.even {
+    background-color: #fde9d9;
+}
+
+</style>
+<title>Employee Timecard</title>
+</head>
+
+<body>
+<div id="main">
+<table class="timecard">
+    <caption>Tableau de Commande</caption>
+    <thead>
+        <tr>
+            <th id="thDay">photo du produit</th>
+            <th id="thDay">Nom du produit</th>
+            <th id="thDay">Quantite</th>
+            <th id="thDay">Prix</th>
+            <th id="thDay">Nom du Client </th>
+            
+            
+        </tr>
+    </thead>
+    
+
+    <fieldset>
+  <form name="Form2" method="POST" action ="afficherCommande.php">
+        Rechercher <input type="text" name="recherche">
+<input type="submit" name="chercher" value="chercher"></br>
+</form>
+
+       
+    <?php 
+
+
+
+
+$ids = array_keys($_SESSION['panier']);
+if(empty($ids)){
+    $products=array();
+}else{
+
+            foreach ($liste as $product):?>
+            
+                                
+    <tbody>
+        <tr class="odd">
+
+            <th ><div class="cart-img-product b-rad-4 o-f-hidden">
+
+            
+
+                                    <img src="../tuto/<?=$product->id;?>.jpg" alt="IMG-PRODUCT">
+                                </div></th>
+                                <td ><?=$product->name;?></td>
+                                 <td ><center><?= $_SESSION['panier'][$product->id]; ?></center></td>
+                                <td ><?= number_format($product->price,2,',',' ');?>DT</td>
+                                <td><?=$product->NomClient;?></td>
+
+
+            
+            
+        </tr>
+        <?php endforeach;?>
+        <?php
+        /*
+        if(($_POST['rechercher'])!=null){
+            $mouhib=$panier->rechercher($_POST['rechercher'],$DB);
+            foreach ($products as $product){
+                
+            ?>
+             <tbody>
+        <tr class="odd">
+
+            <th ><div class="cart-img-product b-rad-4 o-f-hidden">
+
+            
+
+                                    <img src="../tuto/<?=$product->id;?>.jpg" alt="IMG-PRODUCT">
+                                </div></th>
+                                <td ><?=$product->name;?></td>
+                                 <td ><center><?= $_SESSION['panier'][$product->id]; ?></center></td>
+                                <td ><?= number_format($product->price,2,',',' ');?>DT</td>
+                                <td><?=$product->NomClient;?></td>
+
+
+            
+            
+        </tr>
+
+    //php }}*/?>
+
+    </tfoot>
+</table>
+</div>
+</body>
+</html>
+
+            
+
+<form method="GET" action="views/statistique.php">
+                                           <button type="submit" name="Statistique" value="Statistique" class="btn btn-info" style="margin-left:auto;margin-right:403px;display:block;"> Statistique </button>
+                                           
+                </form>
+                <!--/span-->
                 <div class="span9" id="content">
                     <div class="row-fluid">
-                        <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <h4>Success</h4>
-                            The operation completed successfully</div>
-                            <div class="navbar">
-                                <div class="navbar-inner">
-                                    <ul class="breadcrumb">
-                                        <i class="icon-chevron-left hide-sidebar"><a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a></i>
-                                        <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
-                                        <li>
-                                            <a href="#">Livraison</a> <span class="divider">/</span>    
-                                        </li>
-                                        <li>
-                                            <a href="livraison.html" >Afficher Livraison</a> <span class="divider">/</span><li class="active"></li> 
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    
-                     <div class="row-fluid">
-                        <!-- block -->
-                        <div class="block">
-                            <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left">Livraisons</div>
-                            </div>
-                            <div class="block-content collapse in">
-                                <div class="span12">
-                                    
-                                    <table class="table table-striped">
-                                        <thead>
-<tr>
-    <th onclick="sortTable(0)">Id </th>
-<th onclick="sortTable(0)">Nom </th>
-<th>Prenom</th>
-<th onclick="sortTable(0)">Cin</th>
-<th>Numero de telephone</th>
-<th onclick="sortTable(1)">E-mail</th>
-<th>Adresse</th>
-<th>Livreur</th>
-<th>Supprimer</th>
-</tr>
-</thead>
-<tbody>
-<?PHP
-foreach($listeLivraisons as $row){  
+                        <div class="span6">
+                            <!-- block -->
+                          
 
-    ?>
-    <tr>
-    <td><?PHP echo $row['id']; ?></td>
-    <td><?PHP echo $row['nom']; ?></td>
-    <td><?PHP echo $row['prenom']; ?></td>
-    <td><?PHP echo $row['cin']; ?></td>
-    <td><?PHP echo $row['numero']; ?></td>
-    <td><?PHP echo $row['email']; ?></td>
-    <td><?PHP echo $row['adresse']; ?></td>
-    <td><?PHP 
-        if (empty($row['livreur'])) {
-            ?>
-            <a href="affecterChauffeur.php?id=<?PHP echo $row['id']; ?>" class="btn btn-primary">
-    Affecter Livreur</a>
-            <?php
-        }
-        else {
-            echo $row['livreur'];
-        }
-     ?></td>
-    <td><form method="POST" action="supprimerLivraison.php">
-    <input type="submit" name="supprimer" value="Supprimer" class="btn btn-primary">
-    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-    </form>
-    </td>
-    </tr>
-    <?PHP
-}
-?>
-                                        </tbody>
-                                    </table>
-                                    
-                                </div>
-                            </div>
+                                        
+                            <!-- /block -->
                         </div>
-                        <!-- /block -->
-                    </div>
-                    </div>
-                        
+                       
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>&copy; Vincent Gabriel 2013</p>
+            </footer>
+        </div>
         <!--/.fluid-container-->
-        <script>
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("example");
-  switching = true;
-  //Set the sorting direction to ascending:
-  dir = "asc"; 
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      //Each time a switch is done, increase this count by 1:
-      switchcount ++;      
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-}
-</script>
         <script src="vendors/jquery-1.9.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="vendors/easypiechart/jquery.easy-pie-chart.js"></script>
-        <script src="assets/scripts.js"></script>
-        <script>
-        $(function() {
-            // Easy pie charts
-            $('.chart').easyPieChart({animate: 1000});
-        });
-        </script>
-                <script src="vendors/jquery-1.9.1.js"></script>
-        <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
-
 
         <script src="assets/scripts.js"></script>
-        <script src="assets/DT_bootstrap.js"></script>
         <script>
         $(function() {
             
         });
         </script>
+
     </body>
 
 </html>
-

@@ -44,7 +44,7 @@ function afficherLivraison ($livraison){
 	}
 
 	function getChauffeur($livreur){
-		$sql="SELECT * From livraison inner join chauffeur on chauffeur.numero=livraison.livreur where chauffeur.numero=$livreur";
+		$sql="SELECT * From livraison inner join chauffeur on chauffeur.numero=livraison.livreur";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
